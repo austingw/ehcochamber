@@ -3,13 +3,17 @@
   "style": "default",
   "rsc": false,
   "tailwind": {
+
     "config": "tailwind.config.ts",
+
     "css": "src/styles/globals.css",
     "baseColor": "zinc",
     "cssVariables": true
   },
   "aliases": {
+
     "components": "src/components",
     "utils": "src/lib/utils"
+
   }
 }
