@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { Button } from "~/components/ui/button";
 import { api } from "~/utils/api";
 
 export default function Home() {
@@ -40,6 +41,7 @@ export default function Home() {
                 to deploy it.
               </div>
             </Link>
+            <Button>Hello</Button>
           </div>
           <p className="text-2xl text-white">
             {hello.data ? hello.data.greeting : "Loading tRPC query..."}
