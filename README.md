@@ -1,6 +1,6 @@
 # Ehco Chamber
 
-A demo sharing platform for gatekeepers
+A platform for artists with an emphasis on gatekeeping ;)
 
 Available soon at <a href="https://ehcochamber.com">ehcochamber.com</a>
 
