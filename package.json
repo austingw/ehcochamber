@@ -51,8 +51,10 @@
     "@typescript-eslint/parser": "^6.3.0",
     "eslint": "^8.47.0",
     "eslint-config-next": "^13.4.13",
+    "file-loader": "^6.2.0",
     "prisma": "^5.1.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "url-loader": "^4.1.1"
   },
   "ct3aMetadata": {
     "initVersion": "7.19.0"
