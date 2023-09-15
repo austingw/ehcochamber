@@ -1,6 +1,8 @@
 import Head from "next/head";
 import { api } from "@/utils/api";
 import { Flex, Text } from "@mantine/core";
+import AudioPlayer from "@/components/AudioPlayer";
+import UserLayout from "@/layouts/UserLayout";
 
 export default function Home() {
   const hello = api.example.hello.useQuery({ text: "from ehcochamber!" });
@@ -15,7 +17,6 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <Flex
         direction={"column"}
         align={"center"}
@@ -25,10 +26,7 @@ export default function Home() {
         <Text>
           {hello.data ? hello.data.greeting : "Loading tRPC query..."}{" "}
         </Text>
-        <audio
-          src={"https://www.myinstants.com/media/sounds/goofy-ahh-sounds.mp3"}
-          controls
-        />
+        <AudioPlayer />
       </Flex>
     </>
   );
