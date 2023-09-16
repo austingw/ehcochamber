@@ -17,63 +17,65 @@ const AudioPlayer = () => {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
-  const waveformRef = useRef<string | HTMLAudioElement>("");
+  const [currentTime, setCurrentTime] = useState(0);
+
+  const waveformRef = useRef<HTMLDivElement>(null);
+  const wavesurferRef = useRef<WaveSurfer>();
 
   const togglePlay = () => {
     setIsPlaying((prev) => !prev);
   };
+
   const handleAudioEnd = () => {
     setIsPlaying(false);
-  };
-  const handleAudioLoad = () => {
-    if (waveformRef.current) setDuration(waveformRef.current.duration);
   };
 
   useEffect(() => {
     const createWaveform = async () => {
-      const wavesurfer = WaveSurfer.create({
-        container: waveformRef.current,
-        mediaControls: false,
-        waveColor: "#eee",
-        progressColor: "#0178FF",
-        cursorColor: "OrangeRed",
-        barWidth: 3,
-        barRadius: 3,
-        height: 150,
-        normalize: true,
-      });
+      if (waveformRef.current) {
+        wavesurferRef.current = WaveSurfer.create({
+          container: waveformRef.current,
+          mediaControls: false,
+          waveColor: "#eee",
+          progressColor: "#0178FF",
+          cursorColor: "OrangeRed",
+          barWidth: 3,
+          barRadius: 3,
+          height: 150,
+          normalize: true,
+        });
 
-      await wavesurfer.load(url);
+        await wavesurferRef.current.load(url);
 
-      return wavesurfer;
+        return wavesurferRef.current;
+      }
     };
 
     createWaveform()
       .then((wavesurfer) => {
-        if (isPlaying) {
-          wavesurfer.play().catch((err) => console.error(err));
-        } else {
-          wavesurfer.pause();
-        }
+        wavesurfer?.playPause().catch((err) => console.error(err));
 
-        wavesurfer.getCurrentTime();
+        wavesurfer?.on("finish", handleAudioEnd);
       })
       .catch((err) => console.error(err));
 
-    const current = waveformRef?.current;
-
     return () => {
-      if (current?.innerHTML) {
-        current.innerHTML = "";
-      }
+      wavesurferRef.current?.destroy();
     };
-  }, [url, isPlaying]);
+  }, [url]);
 
   return (
     <>
       <div style={style} id="waveform" ref={waveformRef} />
-      {formatTime(duration)}
-      <Button onClick={togglePlay}>{isPlaying ? "Pause" : "Play"}</Button>
+      {formatTime(currentTime)} {formatTime(duration)}
+      <Button
+        onClick={() => {
+          wavesurferRef.current?.playPause().catch((err) => console.error(err));
+          togglePlay();
+        }}
+      >
+        {isPlaying ? "Pause" : "Play"}
+      </Button>
     </>
   );
 };
