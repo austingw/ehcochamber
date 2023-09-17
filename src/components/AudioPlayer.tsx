@@ -16,8 +16,6 @@ const AudioPlayer = () => {
     "https://xntslrrernpkzvgsuipl.supabase.co/storage/v1/object/sign/Audio/oh-my-god-bro-oh-hell-nah-man.mp3?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJBdWRpby9vaC1teS1nb2QtYnJvLW9oLWhlbGwtbmFoLW1hbi5tcDMiLCJpYXQiOjE2OTQ4MjI0NTQsImV4cCI6MTcyNjM1ODQ1NH0.J7c1JpcJALKKMO-o7AsDlfeMX5gQlco1iensjtjIJ0E&t=2023-09-16T00%3A00%3A54.942Z";
 
   const [isPlaying, setIsPlaying] = useState(false);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
 
   const waveformRef = useRef<HTMLDivElement>(null);
   const wavesurferRef = useRef<WaveSurfer>();
@@ -39,9 +37,9 @@ const AudioPlayer = () => {
           waveColor: "#eee",
           progressColor: "#0178FF",
           cursorColor: "OrangeRed",
-          barWidth: 3,
-          barRadius: 3,
-          height: 150,
+          barWidth: 5,
+          barRadius: 5,
+          height: 100,
           normalize: true,
         });
 
@@ -53,8 +51,6 @@ const AudioPlayer = () => {
 
     createWaveform()
       .then((wavesurfer) => {
-        wavesurfer?.playPause().catch((err) => console.error(err));
-
         wavesurfer?.on("finish", handleAudioEnd);
       })
       .catch((err) => console.error(err));
@@ -67,7 +63,7 @@ const AudioPlayer = () => {
   return (
     <>
       <div style={style} id="waveform" ref={waveformRef} />
-      {formatTime(currentTime)} {formatTime(duration)}
+      {formatTime(Number(wavesurferRef.current?.getDuration())) || 0}
       <Button
         onClick={() => {
           wavesurferRef.current?.playPause().catch((err) => console.error(err));
@@ -75,6 +71,29 @@ const AudioPlayer = () => {
         }}
       >
         {isPlaying ? "Pause" : "Play"}
+      </Button>
+      <Button
+        onClick={() => {
+          wavesurferRef.current?.seekTo(0);
+          wavesurferRef.current?.pause();
+          togglePlay();
+        }}
+      >
+        {"<<"}
+      </Button>
+      <Button
+        onClick={() => {
+          wavesurferRef.current?.skip(15);
+        }}
+      >
+        Skip 15 FWD
+      </Button>
+      <Button
+        onClick={() => {
+          wavesurferRef.current?.skip(-15);
+        }}
+      >
+        Skip 15 BWD
       </Button>
     </>
   );
