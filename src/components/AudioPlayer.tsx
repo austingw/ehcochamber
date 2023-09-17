@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
 import React from "react";
 import {
+  IconArrowBackUp,
   IconMultiplier05x,
   IconMultiplier15x,
   IconMultiplier1x,
@@ -25,8 +26,11 @@ const style = {
 };
 
 const AudioPlayer = () => {
+  // const url =
+  //   "https://xntslrrernpkzvgsuipl.supabase.co/storage/v1/object/sign/Audio/oh-my-god-bro-oh-hell-nah-man.mp3?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJBdWRpby9vaC1teS1nb2QtYnJvLW9oLWhlbGwtbmFoLW1hbi5tcDMiLCJpYXQiOjE2OTQ4MjI0NTQsImV4cCI6MTcyNjM1ODQ1NH0.J7c1JpcJALKKMO-o7AsDlfeMX5gQlco1iensjtjIJ0E&t=2023-09-16T00%3A00%3A54.942Z";
+
   const url =
-    "https://xntslrrernpkzvgsuipl.supabase.co/storage/v1/object/sign/Audio/oh-my-god-bro-oh-hell-nah-man.mp3?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJBdWRpby9vaC1teS1nb2QtYnJvLW9oLWhlbGwtbmFoLW1hbi5tcDMiLCJpYXQiOjE2OTQ4MjI0NTQsImV4cCI6MTcyNjM1ODQ1NH0.J7c1JpcJALKKMO-o7AsDlfeMX5gQlco1iensjtjIJ0E&t=2023-09-16T00%3A00%3A54.942Z";
+    "https://xntslrrernpkzvgsuipl.supabase.co/storage/v1/object/sign/Audio/Two%20Pillars(7).wav?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJBdWRpby9Ud28gUGlsbGFycyg3KS53YXYiLCJpYXQiOjE2OTQ5ODU3OTUsImV4cCI6MTcyNjUyMTc5NX0.2jcTsYUzbSXxLKnrxpzgpB0dYxqhVymprddFt80e39g&t=2023-09-17T21%3A23%3A15.979Z";
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -155,6 +159,14 @@ const AudioPlayer = () => {
               }}
             >
               <IconPlayerStop />
+            </ActionIcon>
+            <ActionIcon
+              color="black"
+              onClick={() => {
+                wavesurferRef.current?.skip(-15);
+              }}
+            >
+              <IconArrowBackUp />
             </ActionIcon>
             <ActionIcon
               color="black"
