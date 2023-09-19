@@ -20,20 +20,23 @@ import {
   IconPlayerPlay,
   IconPlayerStop,
 } from "@tabler/icons-react";
+import { api } from "@/utils/api";
 
 const style = {
   width: "100%",
 };
 
-const AudioPlayer = () => {
-  // const url =
-  //   "https://xntslrrernpkzvgsuipl.supabase.co/storage/v1/object/sign/Audio/oh-my-god-bro-oh-hell-nah-man.mp3?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJBdWRpby9vaC1teS1nb2QtYnJvLW9oLWhlbGwtbmFoLW1hbi5tcDMiLCJpYXQiOjE2OTQ4MjI0NTQsImV4cCI6MTcyNjM1ODQ1NH0.J7c1JpcJALKKMO-o7AsDlfeMX5gQlco1iensjtjIJ0E&t=2023-09-16T00%3A00%3A54.942Z";
+interface AudioPlayerProps {
+  url: string;
+  art: string;
+}
 
-  const url =
-    "https://xntslrrernpkzvgsuipl.supabase.co/storage/v1/object/sign/Audio/Two%20Pillars(7).wav?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJBdWRpby9Ud28gUGlsbGFycyg3KS53YXYiLCJpYXQiOjE2OTQ5ODU3OTUsImV4cCI6MTcyNjUyMTc5NX0.2jcTsYUzbSXxLKnrxpzgpB0dYxqhVymprddFt80e39g&t=2023-09-17T21%3A23%3A15.979Z";
+const AudioPlayer = ({ url, art }: AudioPlayerProps) => {
+  console.log(art);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [speed, setSpeed] = useState(1);
 
   const waveformRef = useRef<HTMLDivElement>(null);
@@ -70,6 +73,9 @@ const AudioPlayer = () => {
 
     createWaveform()
       .then((wavesurfer) => {
+        wavesurfer?.on("decode", () => {
+          setDuration(Number(wavesurfer?.getDuration()));
+        });
         wavesurfer?.on("finish", handleAudioEnd);
       })
       .catch((err) => console.error(err));
@@ -103,8 +109,6 @@ const AudioPlayer = () => {
         wavesurferRef.current?.setPlaybackRate(1);
     }
   };
-
-  console.log("speed", speed);
 
   return (
     <>
@@ -156,6 +160,7 @@ const AudioPlayer = () => {
               onClick={() => {
                 wavesurferRef.current?.stop();
                 setIsPlaying(false);
+                setCurrentTime(0);
               }}
             >
               <IconPlayerStop />
@@ -164,6 +169,7 @@ const AudioPlayer = () => {
               color="black"
               onClick={() => {
                 wavesurferRef.current?.skip(-15);
+                setCurrentTime(Number(wavesurferRef.current?.getCurrentTime()));
               }}
             >
               <IconArrowBackUp />
@@ -185,8 +191,7 @@ const AudioPlayer = () => {
               )}
             </ActionIcon>
           </Group>
-          {formatTime(currentTime) || 0} /{" "}
-          {formatTime(Number(wavesurferRef.current?.getDuration())) || 0}
+          {formatTime(currentTime) || 0} / {formatTime(duration) || 0}
         </Flex>
       </Stack>
     </>
