@@ -1,13 +1,15 @@
 import { Flex } from "@mantine/core";
 
 interface PostProps {
-  post: string[];
+  post: string;
 }
 
 const Post = ({}: PostProps) => {
   return (
     <>
-      <Flex></Flex>
+      <Flex>
+        <h1>Post</h1>
+      </Flex>
     </>
   );
 };
