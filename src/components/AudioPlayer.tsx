@@ -2,6 +2,7 @@ import formatTime from "@/utils/formatTime";
 import {
   ActionIcon,
   Box,
+  Card,
   Flex,
   Group,
   LoadingOverlay,
@@ -20,11 +21,6 @@ import {
   IconPlayerPlay,
   IconPlayerStop,
 } from "@tabler/icons-react";
-import { api } from "@/utils/api";
-
-const style = {
-  width: "100%",
-};
 
 interface AudioPlayerProps {
   url: string;
@@ -112,16 +108,7 @@ const AudioPlayer = ({ url, art }: AudioPlayerProps) => {
 
   return (
     <>
-      <Stack
-        w={"80vw"}
-        pt={20}
-        pb={10}
-        px={20}
-        sx={{
-          border: "2px black solid",
-          borderRadius: 5,
-        }}
-      >
+      <Card withBorder pt={20} pb={10} px={20} m={10}>
         <LoadingOverlay visible={!wavesurferRef.current} />
         <Flex
           direction={"row"}
@@ -136,11 +123,18 @@ const AudioPlayer = ({ url, art }: AudioPlayerProps) => {
             sx={{
               minWidth: 150,
               minHeight: 150,
-              border: "2px black solid",
-              borderRadius: 5,
+              backgroundColor: "gray",
+              borderRadius: 10,
             }}
           />
-          <div style={style} id="waveform" ref={waveformRef} />
+
+          <div
+            style={{
+              width: "100%",
+            }}
+            id="waveform"
+            ref={waveformRef}
+          />
         </Flex>
         <Flex justify={"space-between"} align={"center"}>
           <Group>
@@ -193,7 +187,7 @@ const AudioPlayer = ({ url, art }: AudioPlayerProps) => {
           </Group>
           {formatTime(currentTime) || 0} / {formatTime(duration) || 0}
         </Flex>
-      </Stack>
+      </Card>
     </>
   );
 };
