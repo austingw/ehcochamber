@@ -4,7 +4,11 @@ import { api } from "@/utils/api";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      theme={{ colorScheme: "light" }}
+    >
       <Component {...pageProps} />
     </MantineProvider>
   );
