@@ -28,8 +28,6 @@ interface AudioPlayerProps {
 }
 
 const AudioPlayer = ({ url, art }: AudioPlayerProps) => {
-  console.log(art);
-
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
