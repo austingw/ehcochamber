@@ -42,12 +42,19 @@ const PostCard = ({
         <Group
           spacing={"xs"}
           align="center"
+          noWrap
           onClick={() => clickPost()}
           sx={{
             cursor: "pointer",
           }}
         >
-          <Badge variant="gradient" gradient={{ from: "yellow", to: "red" }}>
+          <Badge
+            variant="gradient"
+            gradient={{ from: "yellow", to: "red" }}
+            sx={{
+              minWidth: "fit-content",
+            }}
+          >
             demo
           </Badge>
           <Text
@@ -75,12 +82,12 @@ const PostCard = ({
             Two Pillarz Two Pillarz Two Pillarz Two Pillarz
           </Text>
         </Group>
-        <Group spacing={0} align="center">
+        <Group spacing={0} align="center" noWrap>
           <Text
             fz="sm"
             c="dimmed"
             lineClamp={1}
-            w={"92%"}
+            w={"100%"}
             onClick={() => clickPost()}
             sx={{
               cursor: "pointer",
@@ -112,7 +119,7 @@ const PostCard = ({
           </Text>
           <Text
             fz="sm"
-            lineClamp={4}
+            lineClamp={1}
             component="a"
             onClick={() => clickPost()}
             c={theme.colors.blue[6]}
@@ -121,12 +128,13 @@ const PostCard = ({
               ":hover": {
                 textDecoration: "underline",
               },
+              minWidth: "fit-content",
             }}
           >
             View full post
           </Text>
         </Group>
-        <Group position="apart" align="center" mx={-5}>
+        <Group position="apart" align="center" mx={-5} noWrap>
           <Group spacing={"xs"} align="center">
             <Group spacing={4} align="center">
               <ActionIcon color={"red"} size={"sm"} onClick={() => clickLike()}>
