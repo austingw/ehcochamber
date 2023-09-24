@@ -113,14 +113,15 @@ const AudioPlayer = ({ url, art }: AudioPlayerProps) => {
           align={"center"}
           justify={"flex-start"}
           gap={10}
+          pb={10}
         >
           {
-            //placeholder for optional track art
+            //below is placeholder for optional track art
           }
           <Box
             sx={{
-              minWidth: 150,
-              minHeight: 150,
+              minWidth: 140,
+              minHeight: 140,
               backgroundColor: "gray",
               borderRadius: 10,
             }}
