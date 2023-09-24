@@ -54,6 +54,68 @@ const PostCard = ({
             fz="xl"
             fw={600}
             transform="uppercase"
+            lineClamp={1}
+            sx={{
+              cursor: "pointer",
+              ":hover": {
+                textDecoration: "underline",
+              },
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+            }}
+          >
+            Two Pillarz Two Pillarz Two Pillarz Two Pillarz Two Pillarz Two
+            Pillarz Two Pillarz Two Pillarz Two Pillarz Two Pillarz Two Pillarz
+            Two Pillarz Two Pillarz Two Pillarz Two Pillarz Two Pillarz Two
+            Pillarz Two Pillarz Two Pillarz Two Pillarz Two Pillarz Two Pillarz
+            Two Pillarz Two Pillarz Two Pillarz Two Pillarz Two Pillarz Two
+            Pillarz Two Pillarz Two Pillarz Two Pillarz Two Pillarz Two Pillarz
+            Two Pillarz Two Pillarz Two Pillarz Two Pillarz Two Pillarz Two
+            Pillarz Two Pillarz Two Pillarz Two Pillarz Two Pillarz Two Pillarz
+            Two Pillarz Two Pillarz Two Pillarz Two Pillarz
+          </Text>
+        </Group>
+        <Group spacing={0} align="center">
+          <Text
+            fz="sm"
+            c="dimmed"
+            lineClamp={1}
+            w={"92%"}
+            onClick={() => clickPost()}
+            sx={{
+              cursor: "pointer",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+            }}
+          >
+            A description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah A
+            description of the inspo behind the track blah blah blah
+          </Text>
+          <Text
+            fz="sm"
+            lineClamp={4}
+            component="a"
+            onClick={() => clickPost()}
+            c={theme.colors.blue[6]}
             sx={{
               cursor: "pointer",
               ":hover": {
@@ -61,20 +123,9 @@ const PostCard = ({
               },
             }}
           >
-            Two Pillarz
+            View full post
           </Text>
         </Group>
-        <Text
-          fz="sm"
-          c="dimmed"
-          lineClamp={4}
-          onClick={() => clickPost()}
-          sx={{
-            cursor: "pointer",
-          }}
-        >
-          A description of the inspo behind the track blah blah blah
-        </Text>
         <Group position="apart" align="center" mx={-5}>
           <Group spacing={"xs"} align="center">
             <Group spacing={4} align="center">
