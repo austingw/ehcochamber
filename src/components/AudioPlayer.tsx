@@ -7,6 +7,7 @@ import {
   Group,
   LoadingOverlay,
   Stack,
+  Text,
 } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
@@ -106,7 +107,7 @@ const AudioPlayer = ({ url, art }: AudioPlayerProps) => {
 
   return (
     <>
-      <Card withBorder pt={20} pb={10} px={20} m={10}>
+      <Card withBorder pt={20} pb={10} px={20} m={10} w={"100%"}>
         <LoadingOverlay visible={!wavesurferRef.current} />
         <Flex
           direction={"row"}
@@ -133,6 +134,9 @@ const AudioPlayer = ({ url, art }: AudioPlayerProps) => {
             }}
             id="waveform"
             ref={waveformRef}
+            onClick={() => {
+              setCurrentTime(Number(wavesurferRef.current?.getCurrentTime()));
+            }}
           />
         </Flex>
         <Flex justify={"space-between"} align={"center"}>
@@ -184,7 +188,9 @@ const AudioPlayer = ({ url, art }: AudioPlayerProps) => {
               )}
             </ActionIcon>
           </Group>
-          {formatTime(currentTime) || 0} / {formatTime(duration) || 0}
+          <Text size="sm" c="dimmed" weight={500}>
+            {formatTime(currentTime) || 0} / {formatTime(duration) || 0}
+          </Text>
         </Flex>
       </Card>
     </>
