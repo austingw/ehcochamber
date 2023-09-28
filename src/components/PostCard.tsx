@@ -8,7 +8,9 @@ import {
   useMantineTheme,
   rem,
   Stack,
+  Flex,
 } from "@mantine/core";
+import useMediaQuery from "@mantine/hooks";
 import AudioPlayer from "./AudioPlayer";
 
 interface PostCardProps {
@@ -26,17 +28,28 @@ const PostCard = ({
   clickLike,
   clickComment,
 }: PostCardProps) => {
-  const linkProps = {
-    href: "https://mantine.dev",
-    target: "_blank",
-    rel: "noopener noreferrer",
-  };
   const theme = useMantineTheme();
 
   return (
-    <Card withBorder radius="md" w={"100%"} shadow="sm">
+    <Card
+      withBorder
+      radius="md"
+      w={"100%"}
+      shadow="sm"
+      sx={{
+        cursor: "pointer",
+      }}
+    >
       <Card.Section>
-        <AudioPlayer url={url} art={art} />
+        <Flex
+          justify={"center"}
+          align={"center"}
+          sx={{
+            zIndex: 999,
+          }}
+        >
+          <AudioPlayer url={url} art={art} />
+        </Flex>
       </Card.Section>
       <Stack spacing={4}>
         <Group
@@ -134,7 +147,13 @@ const PostCard = ({
             View full post
           </Text>
         </Group>
-        <Group position="apart" align="center" mx={-5} noWrap>
+        <Group
+          position="apart"
+          align="flex-start"
+          spacing={"sm"}
+          mx={-5}
+          pt={5}
+        >
           <Group spacing={"xs"} align="center">
             <Group spacing={4} align="center">
               <ActionIcon color={"red"} size={"sm"} onClick={() => clickLike()}>
@@ -172,7 +191,7 @@ const PostCard = ({
               },
             }}
           >
-            Posted by <b>Bill Wormeater</b>
+            Bill Wormeater
           </Badge>
         </Group>
       </Stack>
