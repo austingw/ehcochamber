@@ -1,17 +1,127 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
+    schemas = ["public", "auth"]
+    extensions = [hstore(schema: "myHstoreSchema"), pg_trgm, postgis(version: "2.1")]
+}
 
 generator client {
     provider = "prisma-client-js"
+    previewFeatures = ["multiSchema", "postgresqlExtensions"]
 }
 
-datasource db {
-    provider = "sqlite"
-    url      = env("DATABASE_URL")
+enum PostType {
+    COLLAB @map("collab")
+    DEMO @map("demo")
+    MASTER @map("master")
+    MIX @map("mix")
+    SAMPLE @map("sample")
+    SKETCH @map("sketch")
+    TEXT @map("text")
+
+    @@schema("public")
+}
+model User {
+    // this will need heavy refactoring to use with Supabase auth
+    id          Int     @id @default(autoincrement())
+    createdAt   DateTime @default(now()) @map("created_at")
+    updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+    email       String  @unique
+    name        String?
+    password    String
+    
+    profile     Profile?
+
+    @@map("users")
+    @@schema("auth")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Profile {
+    id          Int @id @default(autoincrement())
+    name        String
+    email       String?
+    bio         String?
+    avatar      String?
+    bandcamp    String?
+    soundcloud  String?
+    spotify     String?
+    website     String?
+    userId      Int @map("user_id") @unique
+    user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    posts       Post[]
+    comments    Comments[]
+
+    @@schema("public")
+    @@map("profiles")
 }
+
+model Post {
+    id          Int      @id @default(autoincrement())
+    createdAt   DateTime @default(now()) @map("created_at")
+    updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+    title       String
+    description String?
+    published   Boolean  @default(false)
+    audioId     Int?     @map("audio_id")
+    imageId     Int?     @map("image_id")
+    authorId    Int   @map("author_id")
+    type        PostType   @default(TEXT)
+    bpm         Int?
+    key         String?
+    influences  String?
+    genre       String?
+    comments    Comments[]
+    audio       Audio? 
+    image       Image?
+
+    author        Profile     @relation(fields: [authorId], references: [id])
+
+    @@map("posts")
+    @@schema("public")
+}
+
+model Comments {
+    id          Int     @id @default(autoincrement())
+    createdAt   DateTime @default(now()) @map("created_at")
+    updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+    text        String
+    authorId      Int     @map("author_id")
+    postId      Int     @map("post_id")
+
+    post        Post    @relation(fields: [postId], references: [id])
+    author      Profile    @relation(fields: [authorId], references: [id])
+
+    @@map("comments")
+    @@schema("public")
+}
+
+model Audio {
+    id          Int     @id @default(autoincrement())
+    createdAt   DateTime @default(now()) @map("created_at")
+    updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+    url         String
+    postId      Int     @map("post_id") @unique
+
+    post        Post    @relation(fields: [postId], references: [id]) 
+
+    @@map("audio")
+    @@schema("public")
+    }
+
+model Image {
+    id          Int     @id @default(autoincrement())
+    createdAt   DateTime @default(now()) @map("created_at")
+    updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+    url         String
+    postId      Int     @map("post_id") @unique
+
+    post        Post  @relation(fields: [postId], references: [id]) 
+
+    @@map("images")
+    @@schema("public")
+}
+
+
+
