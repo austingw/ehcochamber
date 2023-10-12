@@ -1,4 +1,4 @@
-import { exampleRouter } from "@/server/api/routers/example";
+import { authRouter, exampleRouter } from "@/server/api/routers/auth";
 import { createTRPCRouter } from "@/server/api/trpc";
 import { audio } from "./routers/audio";
 
@@ -8,7 +8,7 @@ import { audio } from "./routers/audio";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  example: exampleRouter,
+  signup: authRouter.signUp,
   audio: audio,
 });
 
