@@ -1,11 +1,9 @@
 import Head from "next/head";
-import { api } from "@/utils/api";
-import { Flex, Text } from "@mantine/core";
+import { Flex } from "@mantine/core";
 import Feed from "@/components/Feed";
+import SignUp from "@/components/SignUp";
 
 export default function Home() {
-  const hello = api.example.hello.useQuery({ text: "from ehcochamber!" });
-
   return (
     <>
       <Head>
@@ -16,6 +14,7 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <SignUp />
       <Flex
         direction={"column"}
         align={"center"}
@@ -23,9 +22,6 @@ export default function Home() {
         h={"100%"}
         w={"100%"}
       >
-        <Text>
-          {hello.data ? hello.data.greeting : "Loading tRPC query..."}{" "}
-        </Text>
         <Feed />
       </Flex>
     </>
