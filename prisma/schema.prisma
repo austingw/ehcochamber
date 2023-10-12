@@ -147,7 +147,7 @@ model User {
   identities                  identities[]
   mfa_factors                 mfa_factors[]
   sessions                    sessions[]
-profile     Profile?
+  profile     Profile?
 
 
   @@index([instance_id])
