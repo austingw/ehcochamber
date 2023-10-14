@@ -14,7 +14,6 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SignUp />
       <Flex
         direction={"column"}
         align={"center"}
@@ -22,6 +21,8 @@ export default function Home() {
         h={"100%"}
         w={"100%"}
       >
+        <SignUp />
+
         <Feed />
       </Flex>
     </>
