@@ -1,32 +1,79 @@
 import { api } from "@/utils/api";
-import { Flex, Input, Stack } from "@mantine/core";
+import {
+  Button,
+  Flex,
+  LoadingOverlay,
+  PasswordInput,
+  Stack,
+  TextInput,
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
+import { IconCheck, IconX } from "@tabler/icons-react";
 
 const SignUp = () => {
-  const signUp = api.signup.useMutation({
+  const form = useForm({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const { mutate, isLoading } = api.signup.useMutation({
     onSuccess: () => {
       console.log("success");
+      notifications.show({
+        title: "Success",
+        message: "You have successfully signed up!",
+        color: "green",
+        icon: <IconCheck />,
+      });
     },
     onError: (err) => {
-      console.log(err);
+      console.log("error", err);
+      notifications.show({
+        title: "Error",
+        message: "There was an error signing up.",
+        color: "red",
+        icon: <IconX />,
+      });
     },
   });
 
   function handleSignup() {
-    signUp.mutate({
-      email: "test",
-      password: "test",
+    mutate({
+      email: form.values.email,
+      password: form.values.password,
     });
   }
 
   return (
     <>
-      <Flex>
-        <Stack>
-          <Input placeholder="Username" />
-          <Input placeholder="Email" />
-          <Input placeholder="Password" />
-        </Stack>
-      </Flex>
+      <form
+        onSubmit={form.onSubmit((values) => {
+          console.log("values", values);
+          handleSignup();
+        })}
+      >
+        <Flex>
+          <Stack>
+            <LoadingOverlay visible={isLoading} />
+            <TextInput
+              withAsterisk
+              label="Email"
+              placeholder="your@email.com"
+              {...form.getInputProps("email")}
+            />
+            <PasswordInput
+              withAsterisk
+              label="Password"
+              placeholder="Password"
+              {...form.getInputProps("password")}
+            />
+            <Button type="submit">Sign Up</Button>
+          </Stack>
+        </Flex>
+      </form>
     </>
   );
 };
