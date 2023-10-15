@@ -25,7 +25,6 @@ enum PostType {
 model Profile {
     id          Int @id @default(autoincrement())
     name        String
-    email       String?
     bio         String?
     avatar      String?
     bandcamp    String?
@@ -72,10 +71,10 @@ model Comments {
     createdAt   DateTime @default(now()) @map("created_at")
     updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
     text        String
-    authorId      Int     @map("author_id")
+    authorId    Int     @map("author_id")
     postId      Int     @map("post_id")
 
-    post        Post    @relation(fields: [postId], references: [id])
+    post        Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
     author      Profile    @relation(fields: [authorId], references: [id])
 
     @@map("comments")
