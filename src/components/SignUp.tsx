@@ -14,6 +14,7 @@ import { IconCheck, IconX } from "@tabler/icons-react";
 const SignUp = () => {
   const form = useForm({
     initialValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -44,6 +45,7 @@ const SignUp = () => {
     mutate({
       email: form.values.email,
       password: form.values.password,
+      name: form.values.name,
     });
   }
 
@@ -60,8 +62,14 @@ const SignUp = () => {
             <LoadingOverlay visible={isLoading} />
             <TextInput
               withAsterisk
+              label="Artist Name"
+              placeholder="Something cool like Scaremony..."
+              {...form.getInputProps("username")}
+            />
+            <TextInput
+              withAsterisk
               label="Email"
-              placeholder="your@email.com"
+              placeholder="Following this format: your@email.com"
               {...form.getInputProps("email")}
             />
             <PasswordInput
